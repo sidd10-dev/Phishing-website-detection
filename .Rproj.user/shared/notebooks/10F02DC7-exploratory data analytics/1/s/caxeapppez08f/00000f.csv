@@ -1,0 +1,4 @@
+"0","df.filtered %>% "
+"0","  ggplot(aes(x=status, fill=as.factor(nb_www))) +"
+"0","  geom_bar(position=""dodge"", colour = ""black"") +"
+"0","  scale_fill_viridis_d()"

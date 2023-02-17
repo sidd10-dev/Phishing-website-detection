@@ -1,0 +1,3 @@
+"0","ind = sample.split(Y = df$status, SplitRatio = 0.7)"
+"0","train = df[ind,]"
+"0","test = df[!ind,]"

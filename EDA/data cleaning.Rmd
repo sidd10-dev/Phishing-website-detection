@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+Insert Libraries Required
+```{r}
+library(tidyverse)
+```
+
+```{r}
+df <- read.csv('../datasets/dataset_phishing.csv')
+nrow(df)
+ncol(df)
+```
+```{r}
+df %>% colnames()
+```
+```{r}
+str(df)
+```
+Except url and status all other columns are integer or numeric
+
+Removing url as we dont need url name for predicting
+
+```{r}
+df <- df %>% 
+  select(-url)
+```
+
+
+Checking unique values in status
+
+```{r}
+df %>% 
+  select(status) %>% 
+  unique()
+```
+We have two values legitimate and phishing
+
+Mapping legitimate to 0 and phishing to 1
+
+```{r}
+df <- df %>% 
+  mutate(status = case_when(status == "legitimate" ~ 0,
+                            status == "phishing" ~ 1))
+
+df %>% 
+  select(status) %>% 
+  unique()
+```
+Successfully mapped all values to 0 and 1
+
+checking for null values
+
+```{r}
+for (c in colnames(df)) {
+  n = df %>% 
+    mutate(c = is.na(.[c])) %>% 
+    filter(c == TRUE) %>% 
+    summarise(n = n())
+  print(paste(c, n$n, sep=":"))
+}
+```
+
+No null values in all columns
+
+Saving df as cleaned_dataset
+
+```{r}
+write.csv(df, file="../datasets/cleaned_dataset.csv")
+```
+

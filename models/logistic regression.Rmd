@@ -1,0 +1,33 @@
+```{r}
+library(tidyverse)
+```
+
+```{r}
+train <- read.csv("../datasets/train.csv")
+test <- read.csv("../datasets/test.csv")
+```
+
+```{r}
+train <- train %>% 
+  mutate(status = as.factor(status))
+test <- test %>% 
+  mutate(status = as.factor(status))
+```
+
+```{r}
+logistic.model <- glm(status ~ ., family="binomial", data = train)
+```
+```{r}
+predictions <- predict(logistic.model, test, type="response")
+predictions <- ifelse(predictions >0.5, 1, 0)
+```
+
+```{r}
+cm <- table(predictions, test$status)
+cm
+```
+```{r}
+accuracy <- (cm[1] + cm[4])/nrow(test) * 100
+accuracy
+```
+

@@ -1,0 +1,4 @@
+"0","df.filtered %>% "
+"0","  ggplot(aes(y=longest_word_path, x=as.factor(status), fill=status)) +"
+"0","  geom_boxplot() +"
+"0","  ggtitle(""Longest word path distribution"") "

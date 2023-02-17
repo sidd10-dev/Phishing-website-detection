@@ -1,0 +1,6 @@
+"0","df.filtered %>% "
+"0","  mutate(tld = as.factor(tld_in_subdomain)) %>% "
+"0","  ggplot(aes(x=tld, fill=status)) +"
+"0","  geom_bar(colour=""black"", position=""dodge"") +"
+"0","  scale_fill_viridis_d() +"
+"0","  ggtitle(""TLD_IN_SUBDOMAIN distribution with status hue"")"

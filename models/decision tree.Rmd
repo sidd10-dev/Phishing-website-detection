@@ -1,0 +1,34 @@
+```{r}
+library(rpart)
+library(tidyverse)
+```
+
+```{r}
+train <- read.csv("../datasets/train.csv")
+test <- read.csv("../datasets/test.csv")
+```
+
+```{r}
+train <- train %>% 
+  mutate(status = as.factor(status))
+test <- test %>% 
+  mutate(status = as.factor(status))
+```
+
+```{r}
+model.dt <- rpart(status ~ ., train)
+```
+
+```{r}
+predictions <- predict(model.rf, test)
+cm <- table(predictions, test$status)
+```
+
+```{r}
+cm
+```
+```{r}
+accuracy <- (cm[1] + cm[4])/nrow(test) * 100
+accuracy
+```
+

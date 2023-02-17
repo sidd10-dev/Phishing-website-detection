@@ -1,0 +1,6 @@
+"0","df.filtered %>% "
+"0","  mutate(et = as.factor(empty_title)) %>%"
+"0","  ggplot(aes(x=et, fill=status)) +"
+"0","  geom_bar(colour=""black"", position=""dodge"") +"
+"0","  scale_fill_viridis_d() +"
+"0","  ggtitle(""Empty title distribution with status hue"")"

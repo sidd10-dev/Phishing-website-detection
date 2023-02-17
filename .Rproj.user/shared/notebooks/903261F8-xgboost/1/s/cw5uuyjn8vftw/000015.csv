@@ -1,0 +1,6 @@
+"0","dtrain <- xgb.DMatrix(data = train[, -1], label = train$status)
+"
+"2","Error in xgb.DMatrix(data = train[, -1], label = train$status) : 
+  'data' has class 'character' and length 184000.
+  'data' accepts either a numeric matrix or a single filename.
+"

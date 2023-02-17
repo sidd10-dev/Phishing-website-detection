@@ -1,0 +1,5 @@
+"0","predictions <- ifelse(predictictions >0.5, 1, 0)
+"
+"2","Error in ifelse(predictictions > 0.5, 1, 0) : 
+  object 'predictictions' not found
+"

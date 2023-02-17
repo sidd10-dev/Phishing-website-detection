@@ -1,0 +1,2 @@
+"0","df <- read.csv(""../datasets/cleaned_dataset.csv"")"
+"0","df %>% head()"

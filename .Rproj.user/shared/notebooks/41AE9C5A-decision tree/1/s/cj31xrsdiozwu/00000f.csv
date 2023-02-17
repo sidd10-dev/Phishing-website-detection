@@ -1,0 +1,4 @@
+"0","train <- train %>% "
+"0","  mutate(status = as.factor(status))"
+"0","test <- test %>% "
+"0","  mutate(status = as.factor(status))"

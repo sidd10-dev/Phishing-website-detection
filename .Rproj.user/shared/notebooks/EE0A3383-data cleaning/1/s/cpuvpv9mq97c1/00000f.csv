@@ -1,0 +1,12 @@
+"0","df <- read.csv('../datasets/dataset_phishing.csv')
+nrow(df)
+"
+"1","[1]"
+"1"," 11430"
+"1","
+"
+"0","ncol(df)"
+"1","[1]"
+"1"," 89"
+"1","
+"

@@ -1,0 +1,6 @@
+"0","corr.mat <- round(cor(df), 2)"
+"2","Warning: the standard deviation is zero"
+"0","melted.corr.mat <- melt(corr.mat)"
+"0","melted.corr.mat %>% "
+"0","  ggplot(aes(x=Var1, y=Var2, fill=value)) +"
+"0","  geom_tile()"
