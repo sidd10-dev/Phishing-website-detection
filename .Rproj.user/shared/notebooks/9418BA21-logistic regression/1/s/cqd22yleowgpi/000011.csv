@@ -1,3 +1,0 @@
-"0","logistic.model <- glm(status ~ ., family=""binomial"", data = train)
-"
-"2","Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred"

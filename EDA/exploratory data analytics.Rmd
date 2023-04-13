@@ -12,7 +12,7 @@ library(rlist)
 ```
 
 ```{r}
-df <- read.csv("../datasets/cleaned_dataset.csv")
+df <- read.csv("D:/Projects/Phishing website detection/datasets/cleaned_dataset.csv")
 df %>% head()
 ```
 ```{r}
@@ -28,7 +28,8 @@ corr.mat <- round(cor(df), 2)
 melted.corr.mat <- melt(corr.mat)
 melted.corr.mat %>% 
   ggplot(aes(x=Var1, y=Var2, fill=value)) +
-  geom_tile()
+  geom_tile() + 
+  ggtitle("Correlation Heatmap")
 ```
 ```{r}
 corr.mat[!lower.tri(corr.mat)] <- NA 
@@ -53,7 +54,8 @@ df.filtered %>% head()
 ```{r}
 df.filtered %>% 
   ggplot(aes(y=page_rank, x=status, fill=status)) +
-  geom_boxplot()
+  geom_boxplot() + 
+  ggtitle("Page Rank vs Status")
 ```
 We can see that phishing websites have few outliers
 
@@ -61,14 +63,16 @@ We can see that phishing websites have few outliers
 df.filtered %>% 
   ggplot(aes(x=status, fill=as.factor(nb_www))) +
   geom_bar(position="dodge", colour = "black") +
-  scale_fill_viridis_d()
+  scale_fill_viridis_d() + 
+  ggtitle("Number of www in URL")
 ```
 In non phshing websites there is no more than 1 www and in phishing websites we have a lot of values with 0  www count
 
 ```{r}
 df.filtered %>% 
   ggplot(aes(x=status, y=nb_hyperlinks, fill=status)) +
-  geom_boxplot()
+  geom_boxplot() + 
+  ggtitle("Box plot of nb_hyperlinks")
 ```
 Lot of outliers in nb_hyperlinks
 
@@ -90,7 +94,8 @@ df.filtered %>%
 ```{r}
 df.filtered %>% 
   ggplot(aes(x=status, y=domain_age, fill=status)) +
-  geom_violin()
+  geom_violin() + 
+  ggtitle("Domain Age")
 ```
 
 The column has to be normalised as it has pretty good distinctive features
@@ -102,7 +107,8 @@ summary(df$ratio_intHyperlinks)
 df.filtered %>% 
   arrange(nb_hyperlinks) %>% 
   ggplot(aes(x=ratio_intHyperlinks, fill=status)) +
-  geom_density(bins=100, color="black", alpha=0.3)
+  geom_density(bins=100, color="black", alpha=0.3) +
+  ggtitle("Number of Hyperlinks in website")
 ```
 Better to use than nb_hyperlinks
 
@@ -112,7 +118,8 @@ summary(df$nb_dots)
 ```{r}
 df.filtered %>% 
   ggplot(aes(y=nb_dots)) +
-  geom_boxplot(fill="deepskyblue3")
+  geom_boxplot(fill="deepskyblue3") + 
+  ggtitle("Number of dots in URL")
 ```
 
 Lot of outliers
@@ -120,7 +127,8 @@ Lot of outliers
 ```{r}
 df.filtered %>% 
   ggplot(aes(y=nb_dots, x=status, fill=status)) +
-  geom_boxplot()
+  geom_boxplot() + 
+  ggtitle("Number of dots in URL")
 ```
 
 Most phishing websites have relatively higher number of dots than normal websites. This column can be useful in classification

@@ -1,0 +1,84 @@
+```{r}
+library(tidyverse)
+library(e1071)
+library(caTools)
+library(class)
+```
+
+```{r}
+train <- read.csv("D:/Projects/Phishing website detection/datasets/train.csv")
+test <- read.csv("D:/Projects/Phishing website detection/datasets/test.csv")
+```
+
+```{r}
+train <- train %>% 
+  mutate(status = as.factor(status))
+test <- test %>% 
+  mutate(status = as.factor(status))
+```
+
+```{r}
+model.knn <- knn(train=train, test=test, cl=train$status, k = 3)
+```
+
+```{r}
+cm <- table(test$status, model.knn)
+accuracy <- (cm[1] + cm[4])/nrow(test) * 100
+accuracy
+cm[1]/(cm[1] + cm[2])
+cm[1]/(cm[1] + cm[3])
+```
+
+With Hyper parameter tuning
+
+```{r}
+library('e1071')
+library('parsnip')
+library('ranger')
+library('tidyverse')
+library('pso')
+```
+
+```{r}
+#PSO Optimisation
+
+#Defining fitness function
+fit_function <- function(x){
+  a <- as.integer(x[1])
+  
+  #define model
+  model <- knn(train=train, test=test, cl=train$status, k = a)
+  
+  cm <- table(test$status, model)
+  accuracy <- (cm[1] + cm[4])/nrow(test)
+  
+  return(-accuracy)
+}
+```
+
+```{r}
+pso <- psoptim(par = rep(NA,1), fn = fit_function, lower = c(1), upper = c(20), 
+        control = list(maxit = 20, vectorize = T, s = 2))
+pso$par
+```
+
+New Model
+
+```{r}
+a <- as.integer(pso$par[1])
+
+#define model
+model.o <- knn(train=train, test=test, cl=train$status, k = a)
+
+cm <- table(test$status, model.0)
+acc <- (cm[1] + cm[4])/nrow(test)
+acc
+cm[1]/(cm[1] + cm[2])
+cm[1]/(cm[1] + cm[3])
+```
+
+Without Hypertuning - 0.758309
+With hypertuning - 0.7790087
+0.7306122
+
+

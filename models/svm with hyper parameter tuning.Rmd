@@ -1,0 +1,89 @@
+```{r}
+library(tidyverse)
+library(e1071)
+```
+
+Loading Datasets
+
+```{r}
+train <- read.csv("D:/Projects/Phishing website detection/datasets/train.csv")
+test <- read.csv("D:/Projects/Phishing website detection/datasets/test.csv")
+```
+
+Model without PSO optimisation
+
+```{r}
+model <- svm(formula = status ~ ., data = train)
+model
+```
+
+Accuracy
+
+```{r}
+preds <- predict(model, test)
+preds <- ifelse(preds > 0.5, 1, 0)
+cm <- table(preds, test %>% pull('status'))
+(cm[1] + cm[4])/nrow(test)
+cm[1]/(cm[1] + cm[2])
+cm[1]/(cm[1] + cm[3])
+```
+
+With PSO Optimisation for feature weighting
+
+```{r}
+library('e1071')
+library('parsnip')
+library('ranger')
+library('tidyverse')
+library('pso')
+```
+
+```{r}
+#PSO Optimisation
+
+#Defining fitness function
+fit_function <- function(x){
+  a <- x[1]
+  b <- x[2]
+  
+  #define model
+  model <- svm(formula = status ~ .,
+               data = train,
+               kernel = 'radial',
+               type = 'eps-regression',
+               cost = a,
+               gamma = b)
+  
+  preds <- predict(model, test)
+  preds <- ifelse(preds > 0.5, 1, 0)
+  cm <- table(preds, test %>% pull('status'))
+  acc <- (cm[1] + cm[4])/nrow(test)
+  return(-acc)
+}
+```
+
+```{r}
+pso <- psoptim(par = rep(NA,2), fn = fit_function, lower = c(0.1,0.001), upper = c(2, 0.1), 
+        control = list(maxit = 10, vectorize = T, s = 5))
+pso$par
+```
+
+New Model
+
+```{r}
+model <- svm(formula = status ~ .,
+             data = train,
+             kernel = 'radial',
+             type = 'eps-regression',
+             cost = 2,
+             gamma = 0.1)
+preds <- predict(model, test)
+preds <- ifelse(preds > 0.5, 1, 0)
+cm <- table(preds, test %>% pull('status'))
+acc <- (cm[1] + cm[4])/nrow(test)
+print(acc)
+cm[1]/(cm[1] + cm[2])
+cm[1]/(cm[1] + cm[3])
+```
+
+

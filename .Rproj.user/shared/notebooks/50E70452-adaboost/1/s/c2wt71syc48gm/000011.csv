@@ -1,5 +1,0 @@
-"0","model.adaboost <- boosting(status~., data=train, boos=TRUE, mfinal=50)
-"
-"2","Error in predict.rpart(fit, newdata = data[, -1], type = ""class"") : 
-  Invalid prediction for ""rpart"" object
-"

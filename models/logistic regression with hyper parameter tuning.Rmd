@@ -1,0 +1,36 @@
+```{r}
+library(tidyverse)
+```
+
+```{r}
+train <- read.csv("D:/Projects/Phishing website detection/datasets/train.csv")
+test <- read.csv("D:/Projects/Phishing website detection/datasets/test.csv")
+```
+
+```{r}
+train <- train %>% 
+  mutate(status = as.factor(status))
+test <- test %>% 
+  mutate(status = as.factor(status))
+```
+
+```{r}
+logistic.model <- glm(status ~ ., family="binomial", data = train)
+```
+
+```{r}
+predictions <- predict(logistic.model, test, type="response")
+predictions <- ifelse(predictions >0.5, 1, 0)
+```
+
+```{r}
+cm <- table(predictions, test$status)
+cm
+```
+```{r}
+accuracy <- (cm[1] + cm[4])/nrow(test) * 100
+accuracy
+cm[1]/(cm[1] + cm[2])
+cm[1]/(cm[1] + cm[3])
+```
+
